@@ -9,7 +9,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 await Firebase.initializeApp(
   options: DefaultFirebaseOptions.currentPlatform,
-);  runApp(MyApp());
+);  runApp(const MyApp());
 }
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -25,9 +25,9 @@ class MyApp extends StatelessWidget {
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, usersnapshot) {
               if (usersnapshot.hasData) {
-                return Home();
+                return const Home();
               } else {
-                return AuthScreen();
+                return const AuthScreen();
               }
             }));
   }
