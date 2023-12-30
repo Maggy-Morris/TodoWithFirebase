@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:todosssss/screens/home.dart';
 
 class AddTask extends StatefulWidget {
   const AddTask({super.key});
@@ -29,8 +30,9 @@ class _AddTaskState extends State<AddTask> {
       'title': titleController.text,
       'description': descriptionController.text,
       'time': time.toString(),
+      'timestamp':time,
     });
-    Fluttertoast.showToast(msg: 'Data Added');
+    Fluttertoast.showToast(msg: 'Task Added');
   }
 
   @override
@@ -77,6 +79,10 @@ class _AddTaskState extends State<AddTask> {
                   })),
                   onPressed: () {
                     addtasktofirebasse();
+                    
+
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const Home()));
                   },
                   child: Text(
                     'Add Task',
