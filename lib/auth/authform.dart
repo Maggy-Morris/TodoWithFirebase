@@ -46,7 +46,7 @@ class _AuthFormState extends State<AuthForm> {
         });
       }
     } catch (err) {
-      print(err);
+      // print(err);
     }
   }
 
@@ -58,6 +58,14 @@ class _AuthFormState extends State<AuthForm> {
       width: MediaQuery.of(context).size.width,
       child: ListView(
         children: [
+          Container(
+            margin: const EdgeInsets.all(30),
+            height: 200,
+            child: Image.asset('assets/images/icon2.jpg'),
+          ),
+
+
+
           Container(
             child: Padding(
               padding: const EdgeInsets.all(10),
@@ -172,8 +180,17 @@ class _AuthFormState extends State<AuthForm> {
                             });
                           },
                           child: isLoginPage
-                              ? const Text('Not a member?')
-                              : const Text("Already a Member?"),
+                              ?  Text('Not a member?',
+                              style: GoogleFonts.roboto(
+                                fontSize: 16,
+                                color: Colors.white
+                              ),
+                              )
+                              :  Text("Already a Member?",
+                              style: GoogleFonts.roboto(
+                                fontSize: 16,
+                                color: Colors.white
+                              ),),
                         ),
                       ),
                     ],

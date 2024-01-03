@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:todosssss/screens/home.dart';
+import 'package:uuid/uuid.dart';
 
 class AddTask extends StatefulWidget {
   const AddTask({super.key});
@@ -15,18 +16,29 @@ class AddTask extends StatefulWidget {
 class _AddTaskState extends State<AddTask> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  final uuid = const Uuid();
+
 
   addtasktofirebasse() async {
     FirebaseAuth auth = FirebaseAuth.instance;
     final User user = await auth.currentUser!;
     String uid = user.uid;
+      String taskId = uuid.v4(); // Generate a unique task ID
+
+    
     var time = DateTime.now();
     await FirebaseFirestore.instance
+        // .collection('users').
+        // doc(user.toString())
         .collection('tasks')
         .doc(uid)
+
         .collection('mytasks')
-        .doc(time.toString())
+        .doc(taskId)
         .set({
+
+      'user':user.email,
+      'taskId': taskId,
       'title': titleController.text,
       'description': descriptionController.text,
       'time': time.toString(),
