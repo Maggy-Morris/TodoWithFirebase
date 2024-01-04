@@ -1,10 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter/material.dart';
+import 'package:todosssss/auth/auth_cubit.dart';
 import 'package:todosssss/auth/authscreen.dart';
 import 'dart:async';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todosssss/screens/home.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -16,9 +17,13 @@ class SplashScreen extends StatefulWidget {
 }
 
 class StartState extends State<SplashScreen> {
+  late AuthCubit authCubit; // Declare AuthCubit variable
+
   @override
   void initState() {
     super.initState();
+    authCubit = context.read<AuthCubit>(); // Initialize AuthCubit
+    authCubit.checkAuthentication(); // Dispatch an event to check authentication status
     startTimer();
   }
 
@@ -28,22 +33,20 @@ class StartState extends State<SplashScreen> {
   }
 
   route() {
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => 
-        StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, usersnapshot) {
-              if (usersnapshot.hasData) {
-                return const Home();
-              } else {
-                return const AuthScreen();
-              }
-            }),
-        
-        
-        
-        
-        ));
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) {
+        return BlocBuilder<AuthCubit, AuthState>(
+          builder: (context, state) {
+            if (state is AuthSuccess) {
+              return const Home();
+            } else {
+              return const AuthScreen();
+            }
+          },
+        );
+      }),
+    );
   }
 
   @override
@@ -53,9 +56,9 @@ class StartState extends State<SplashScreen> {
         margin: const EdgeInsets.only(left: 116, right: 116),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children:  <Widget>[
+          children: <Widget>[
             const CircleAvatar(
-              radius: 120,
+              radius: 100,
               backgroundImage: AssetImage('assets/images/icon.jpg'),
             ),
             const Divider(

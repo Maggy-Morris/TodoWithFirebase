@@ -23,7 +23,7 @@ class _AddTaskState extends State<AddTask> {
     FirebaseAuth auth = FirebaseAuth.instance;
     final User user = await auth.currentUser!;
     String uid = user.uid;
-      String taskId = uuid.v4(); // Generate a unique task ID
+    String taskId = uuid.v4(); // Generate a unique task ID
 
     
     var time = DateTime.now();

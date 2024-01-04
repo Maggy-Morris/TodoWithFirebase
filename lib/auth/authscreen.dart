@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todosssss/auth/auth_cubit.dart';
 import 'package:todosssss/auth/authform.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -15,7 +17,10 @@ class _AuthScreenState extends State<AuthScreen> {
       appBar: AppBar(
         title: const Text('Authentication'),
       ),
-      body: const AuthForm(),
+      body:  BlocProvider(
+        create: (context) => AuthCubit(),
+        child: const AuthForm(),
+      ),
     );
   }
 }
